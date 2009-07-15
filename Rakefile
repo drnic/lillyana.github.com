@@ -21,7 +21,10 @@ task :translate do
     output_path = translate_underscored_path(path)
     output_file = File.join(tranlation_path, output_path, "#{output_name}.html")
     FileUtils.mkdir_p(File.dirname(output_file))
-    `touch #{output_file}`
+    File.open(output_file, "w") do |file|
+      # TODO translate html
+      file << File.read(html)
+    end
   end
 end
 
