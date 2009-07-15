@@ -6,7 +6,9 @@ Feature: Generated English translations
   Scenario: Convert entire site
     Given folder "en-gen" is removed
     When I run task "rake translate"
-    Then folder "en-gen" is created
+    Then folder "en-gen/My_Blog/Poster/2009/5" is created
+    Then file "en-gen/My_Blog/Poster/2009/5/23_Photo_wall.html" is created
+    Then file "en-gen/My_Blog/Poster/2009/5/8_EKO_place.html" is created
   
   
   
