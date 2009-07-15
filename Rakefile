@@ -1,18 +1,19 @@
 require "rake"
 require "fileutils"
+require "rubygems"
 
 # special translations that google screws up
+# can include poorly converted words (ar -> air, should be years)
 $extra_translations = {
   'Prinsessrum' => 'Princess room',
   'Fotovagg' => 'Photo wall',
-  'Min blogg' => 'My blog',
-  'rum' => 'place',
-  'Projekt' => 'Projects'
+  '3 air' => '3 years'
 }
 
 desc "Translate the se html files into en"
 task :translate do
   tranlation_path = 'en-gen'
+  FileUtils.rm_rf(tranlation_path)
   Dir['**/*.html'].each do |html|
     name        = File.basename(html).match(/^(.*)\.html/)[1]
     path        = File.dirname(html)
@@ -27,14 +28,34 @@ end
 def translate_underscored_name(name)
   terms = name.gsub('_', ' ')
   # 1. put terms into Google Translate
+  @translator = Google::Translator.new
+  translated = @translator.translate(:se, :en, terms)
+  # p [terms, translated]
   # 2. manual translation
   $extra_translations.each do |se, en|
-    terms.gsub!(se, en)
+    translated.gsub!(se, en)
   end
-  terms.gsub(' ', '_')
+  translated.gsub(' ', '_')
 end
 
 def translate_underscored_path(path)
   path.split('/').inject([]) { |portions, name| portions << translate_underscored_name(name); portions }.join('/')
+end
+
+
+
+begin
+  require "google_translate"
+rescue LoadError => e
+  puts <<-EOS.gsub(/^  /, '')
+
+  To perform translations you need to run the following command:
+  
+    sudo gem update --system
+    sudo gem sources -a http://gems.github.com
+    sudo gem install shvets-google_translate
+
+  EOS
+  exit 1
 end
 
