@@ -7,7 +7,8 @@ require "rubygems"
 $extra_translations = {
   'Prinsessrum' => 'Princess room',
   'Fotovagg' => 'Photo wall',
-  '3 air' => '3 years'
+  '3 air' => '3 years',
+  'EKO place' => 'ECO Queen'
 }
 
 desc "Translate the se html files into en"
