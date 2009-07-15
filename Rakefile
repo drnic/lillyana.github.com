@@ -6,7 +6,8 @@ $extra_translations = {
   'Prinsessrum' => 'Princess room',
   'Fotovagg' => 'Photo wall',
   'Min blogg' => 'My blog',
-  'rum' => 'place'
+  'rum' => 'place',
+  'Projekt' => 'Projects'
 }
 
 desc "Translate the se html files into en"
